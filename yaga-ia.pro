@@ -15,4 +15,12 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    ylauncher.cpp \
+    yabstractmanager.cpp \
+    ydata.cpp
+
+HEADERS += \
+    ylauncher.h \
+    yabstractmanager.h \
+    ydata.h
