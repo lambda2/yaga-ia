@@ -1,0 +1,60 @@
+{
+    "type" : "word",
+    "word" : {
+        "name" : "je",
+        "context" : {
+            "reference" : "user"
+        },
+        "type" : "subject"
+    }
+},
+{
+    "type" : "word",
+    "word" : {
+        "name" : "tu",
+        "context" : {
+            "reference" : "yaga"
+        },
+        "type" : "subject"
+    }
+},
+{
+    "type" : "word",
+    "word" : {
+        "name" : "il",
+        "context" : {
+            "reference" : "other"
+        },
+        "type" : "subject"
+    }
+},
+{
+    "type" : "word",
+    "word" : {
+        "name" : "nous",
+        "context" : {
+            "reference" : "users"
+        },
+        "type" : "subject"
+    }
+},
+{
+    "type" : "word",
+    "word" : {
+        "name" : "vous",
+        "context" : {
+            "reference" : "yaga"
+        },
+        "type" : "subject"
+    }
+},
+{
+    "type" : "word",
+    "word" : {
+        "name" : "ils",
+        "context" : {
+            "reference" : "others"
+        },
+        "type" : "subject"
+    }
+}

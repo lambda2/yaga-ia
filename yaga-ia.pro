@@ -24,3 +24,6 @@ HEADERS += \
     ylauncher.h \
     yabstractmanager.h \
     ydata.h
+
+OTHER_FILES += \
+    db.json
