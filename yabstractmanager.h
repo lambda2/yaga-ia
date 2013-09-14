@@ -6,11 +6,9 @@
 
 class YAbstractManager
 {
-public:
-    YAbstractManager();
-    virtual YData getData(QString search);
-
-private:
+	public:
+		YAbstractManager();
+		virtual YData getData(QString search) = 0;
 
 };
 

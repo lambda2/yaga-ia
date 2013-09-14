@@ -18,12 +18,14 @@ TEMPLATE = app
 SOURCES += main.cpp \
     ylauncher.cpp \
     yabstractmanager.cpp \
-    ydata.cpp
+    ydata.cpp \
+    yjsonmanager.cpp
 
 HEADERS += \
     ylauncher.h \
     yabstractmanager.h \
-    ydata.h
+    ydata.h \
+    yjsonmanager.h
 
 OTHER_FILES += \
     db.json

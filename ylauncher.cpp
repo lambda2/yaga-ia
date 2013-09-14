@@ -2,10 +2,10 @@
 
 YLauncher::YLauncher(QStringList args)
 {
-    this->input = new QStringList(args);
+	this->input = new QStringList(args);
 }
 
 QString YLauncher::printStack()
 {
-    return (this->input->join(' '));
+	return (this->input->join(' '));
 }

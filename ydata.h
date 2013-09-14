@@ -2,20 +2,9 @@
 #define YDATA_H
 
 #include <QString>
+#include <QStringList>
 #include <QHash>
 
-/**
- * @brief The DataType enum
- * Will simply organize the information.
- */
-enum    DataType
-{
-    TYPE,
-    WORD,
-    WORD_NAME,
-    WORD_CONTEXT,
-    WORD_TYPE
-};
 
 /**
  * @brief Will represent all data about a word.
@@ -23,14 +12,14 @@ enum    DataType
 class   YData
 {
 
-public:
-    YData(QString word);
+	public:
+		YData(QString word);
 
-    bool    addData(DataType dt, QString str);
+		bool    addData(QString dt, QString str);
 
-private:
-    QString                     word;
-    QHash<DataType, QString>*   word_data;
+	private:
+		QString                         word;
+		QHash<QString, QStringList>*    word_data;
 
 };
 

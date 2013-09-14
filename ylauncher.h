@@ -11,12 +11,12 @@
 class YLauncher
 {
 
-private:
-    QStringList *input;
+	private:
+		QStringList	*input;
 
-public:
-    YLauncher(QStringList args);
-    QString printStack();
+	public:
+		YLauncher(QStringList args);
+		QString	printStack();
 };
 
 #endif // YLAUNCHER_H
