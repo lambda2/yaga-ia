@@ -8,15 +8,18 @@
 #include <iostream>
 #include <string>
 
+#include "ysqlmanager.h"
+
 class YLauncher
 {
 
 	private:
-		QStringList	*input;
+		QStringList			*input;
+		YAbstractManager	*manager;
 
 	public:
 		YLauncher(QStringList args);
-		QString	printStack();
+		QString				printStack();
 };
 
 #endif // YLAUNCHER_H

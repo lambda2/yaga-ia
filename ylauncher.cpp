@@ -3,6 +3,7 @@
 YLauncher::YLauncher(QStringList args)
 {
 	this->input = new QStringList(args);
+	this->manager = new YSqlManager();
 }
 
 QString YLauncher::printStack()

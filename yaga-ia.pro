@@ -6,7 +6,7 @@
 
 QT       += core
 
-QT       -= gui
+QT += sql widgets
 
 TARGET = yaga-ia
 CONFIG   += console
@@ -16,16 +16,18 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    ylauncher.cpp \
-    yabstractmanager.cpp \
-    ydata.cpp \
-    yjsonmanager.cpp
+	ylauncher.cpp \
+	yabstractmanager.cpp \
+	ydata.cpp \
+	yjsonmanager.cpp \
+	ysqlmanager.cpp
 
 HEADERS += \
-    ylauncher.h \
-    yabstractmanager.h \
-    ydata.h \
-    yjsonmanager.h
+	ylauncher.h \
+	yabstractmanager.h \
+	ydata.h \
+	yjsonmanager.h \
+	ysqlmanager.h
 
 OTHER_FILES += \
-    db.json
+	db.json
