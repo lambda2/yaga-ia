@@ -4,6 +4,7 @@
 #include <QString>
 #include <QStringList>
 #include <QDebug>
+#include <QCoreApplication>
 
 #include <iostream>
 #include <string>
