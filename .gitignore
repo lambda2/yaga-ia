@@ -1,0 +1,5 @@
+.spyderproject
+*.pyc
+query/__init__.pyc
+query/ydatabase.pyc
+query/yquery.pyc
