@@ -15,6 +15,8 @@ class YDatabase:
         self.t_language = Table('language', self.meta, autoload=True, autoload_with=e)
         self.t_platform = Table('platform', self.meta, autoload=True, autoload_with=e)
         self.t_value = Table('value', self.meta, autoload=True, autoload_with=e)
+        self.t_response = Table('response', self.meta, autoload=True, autoload_with=e)
+        self.t_response_scheme = Table('response_scheme', self.meta, autoload=True, autoload_with=e)
 
     def _connect(self):
         self.engine = create_engine('mysql://yaga-user:4GTEfUQtrLZ4qLN4@localhost/yaga')
@@ -25,8 +27,9 @@ class YDatabase:
         self.connection.close()
         
     def getExprRequest(self):
-        r = select("*").select_from(self.t_expression.join(self.t_value))\
-        .where(self.t_expression.c.name == bindparam("expr"))
+        r = select("*", use_labels=True).select_from(self.t_expression\
+            .join(self.t_value))\
+            .where(self.t_expression.c.name == bindparam("expr"))
         return r
         
     def __repr__(self):
