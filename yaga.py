@@ -7,8 +7,6 @@ from debug.debug import *
 if __name__ == "__main__":
     dbg("Argument : {}".format(sys.argv))
     q = YEngine(sys.argv)
-    if "-v" in sys.argv:
-        gdebug = True
     if "-i" in sys.argv:
         while not q.isTheEnd():
             question = raw_input("Y> ")

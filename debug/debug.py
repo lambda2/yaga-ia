@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-gdebug = True
+log_level = 0
 _log_color = "\033[94m"
 _alert_color = "\033[33m"
 _error_color = "\033[91m"
@@ -9,8 +9,8 @@ _reset_color = "\033[0m"
 
 def dbg(str, level=0):
     col = _log_color
-    if gdebug:
-        if level == -1:
+    if level >= log_level:
+        if level == 3:
             col = _success_color
         elif level == 1:
             col = _alert_color

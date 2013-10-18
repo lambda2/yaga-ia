@@ -26,7 +26,7 @@ class YEngine:
         for word in self.query.query.split(" "):
             r = self.query.searchExpression(word).fetchone()
             if r:
-                dbg("Résultat trouvé : {} = {}".format(word, r[scheme.c.sense]), -1)
+                dbg("Résultat trouvé : {} = {}".format(word, r[scheme.c.sense]), 3)
                 results.append(r[scheme.c.sense])
         if len(results):
             self.results.append(results)
