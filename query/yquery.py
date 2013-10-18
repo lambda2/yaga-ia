@@ -19,8 +19,20 @@ class YQuery:
         return self.searchExpression(self.query)
 
     def searchExpression(self, e):
-        request = self.db.getExprRequest()
-        result = self.db.connection.execute(request, expr=e)
+        request = self.db.getExprRequest([e])
+        result = self.db.connection.execute(request)
+        dbg("resultats de la requete [{}]: {}".format(request, result))
+        return result
+
+    def searchArrayExpression(self, e):
+        request = self.db.getExprRequest(e)
+        result = self.db.connection.execute(request)
+        dbg("resultats de la requete [{}]: {}".format(request, result))
+        return result
+
+    def searchMatches(self, value):
+        request = self.db.getSchemeRequest(value)
+        result = self.db.connection.execute(request)
         dbg("resultats de la requete [{}]: {}".format(request, result))
         return result
 

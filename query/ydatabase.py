@@ -26,12 +26,29 @@ class YDatabase:
     def _disconnect(self):
         self.connection.close()
         
-    def getExprRequest(self):
+    def getExprRequest(self, args):
+        wh = []
+        for arg in args:
+            wh.append(self.t_expression.c.name.ilike("%" + arg + "%"))
+        o = wh.pop()
         r = select("*", use_labels=True).select_from(self.t_expression\
-            .join(self.t_value))\
-            .where(self.t_expression.c.name == bindparam("expr"))
+            .join(self.t_value))
+        while len(wh):
+            o = or_(o, wh.pop())
+        r = r.where(o)
         return r
-        
+
+    def getSchemeRequest(self, args):
+        wh = []
+        for arg in args:
+            wh.append(self.t_response_scheme.c.pattern.ilike("%"+ arg + "%"))
+        r = select("*", use_labels=True).select_from(self.t_response_scheme)
+        o = wh.pop()
+        while len(wh):
+            o = or_(o, wh.pop())
+        r = r.where(o)
+        return r
+
     def __repr__(self):
         ret = ""
         for c in self.t_expression.columns:
