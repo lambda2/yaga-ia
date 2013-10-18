@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from debug.debug import *
+from base.ybase import *
 
-class YMatcher:
+
+class YMatcher(YBase):
     """Classe représentant une bdd yaga"""
-    def __init__(self, dist_scheme, current_scheme):
+    def __init__(self, dist_scheme, current_scheme, ctx):
+        YBase.__init__(self, ctx)
         self.dist = dist_scheme
         self.current = current_scheme
         self.results = dict()
@@ -11,9 +14,9 @@ class YMatcher:
     def computeSchemes(self):
         for e in self.dist:
             self.results[e] = self.getComputeScore(e)
-        dbg("Computing ended !")
-        dbg("[SCORES] {}".format(self.results),1)
-        dbg("[WIN] {}".format(max(self.results)),3)
+        self.dbg("Computing ended !")
+        self.dbg("[SCORES] {}".format(self.results),1)
+        self.dbg("[WIN] {}".format(max(self.results)),3)
         max_ = max(self.results)
         return {max_:self.results[max_]}
         
@@ -33,11 +36,11 @@ class YMatcher:
         for elt in self.current:
             if elt in scheme:
                 matchers = matchers + 1
-        dbg("[#] [Matchers->{}]\t[i_count->{}]\t[dist_count->{}]".format(
+        self. dbg("[#] [Matchers->{}]\t[i_count->{}]\t[dist_count->{}]".format(
             matchers, input_count, dist_count))
         mult = float(input_count) / float(dist_count)
         score = float(float(matchers * 100)/float(dist_count * 100))  * 100 / mult
-        dbg("{} | {} \n >>\t{}%".format(" ".join(self.current)," ".join(scheme),score))
+        self.dbg("{} | {} \n >>\t{}%".format(" ".join(self.current)," ".join(scheme),score))
         return score
 
     def __repr__(self):
