@@ -16,8 +16,8 @@ class YMatcher(YBase):
             self.results[e] = self.getComputeScore(e)
         self.dbg("Computing ended !")
         self.dbg("[SCORES] {}".format(self.results),1)
-        self.dbg("[WIN] {}".format(max(self.results)),3)
-        max_ = max(self.results)
+        self.dbg("[WIN] {}".format(max(self.results, key=self.results.get)),3)
+        max_ = max(self.results, key=self.results.get)
         return {max_:self.results[max_]}
         
     def getComputeScore(self, scheme):

@@ -63,7 +63,7 @@ class YEngine(YBase):
             matcher = YMatcher(keeped, req, self.ctx)
             results.update(matcher.computeSchemes())
         self.dbg("[FWIN] {}\n{}".format(results, keeped))
-        finalWinner = max(results)
+        finalWinner = max(results, key=results.get)
         finalResponse = keeped[finalWinner]
         self.dbg("[FINALLY] {}".format(finalResponse),2)
         r = self.query.getResult(finalResponse).fetchone()
