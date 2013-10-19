@@ -11,6 +11,9 @@ class YContext:
         self.platform = ["all"]
         self.lang = "fr"
         self.verbose = 4
+        self.history = dict()
+        self.server = False
+        self.exitRequired = False
 
     def __repr__(self):
         return "|\tplatform : {}\n| \tlang : {}".format(

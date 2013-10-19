@@ -4,6 +4,7 @@ import sys, os, signal
 from query.yengine import *
 from context.ycontext import *
 from debug.debug import *
+from server.yserver import YServer
 
 def manageVerbosity(args, ctx):
     if "-v" in args:
@@ -20,13 +21,23 @@ def managePlatform(args, ctx):
         ctx.platform.append(platform)
     return args, ctx
 
+def manageServer(args, ctx):
+    if "-s" in args:
+        args.remove("-s")
+        ctx.server = True
+    return args, ctx
+
 # test de la fonction table
 if __name__ == "__main__":
     ctx = YContext()
     sys.argv, ctx = manageVerbosity(sys.argv, ctx)
     sys.argv, ctx = managePlatform(sys.argv, ctx)
+    sys.argv, ctx = manageServer(sys.argv, ctx)
     q = YEngine(sys.argv, ctx)
-    if "-i" in sys.argv:
+    if ctx.server:
+        server = YServer(q, 1990)
+        server.start()
+    elif "-i" in sys.argv:
         while not q.isTheEnd():
             question = raw_input("Y> ")
             q.changeQuery(question)

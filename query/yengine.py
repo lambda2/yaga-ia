@@ -3,7 +3,8 @@ from yquery import *
 from ymatcher import *
 from sqlalchemy import *
 from debug.debug import *
-from base.ybase import *
+from base.ybase import YBase
+import json
 
 from utils import ulist
 
@@ -47,9 +48,16 @@ class YEngine(YBase):
         self.digestPartialQuery()
         self.results = ulist.unique(self.results)
         self.dbg("[UPOST] {}".format(self.results))
-        cb = self.findMatches()
-        if cb:
-            self.applyCallback(cb)
+        print(self.findMatches())
+        #if cb:
+        #   self.applyCallback(cb)
+
+    def serverDigest(self):
+        self.digestEntireQuery()
+        self.digestPartialQuery()
+        self.results = ulist.unique(self.results)
+        self.dbg("[UPOST] {}".format(self.results))
+        return self.findMatches()
 
     def findMatches(self):
         scheme = self.query.db.t_response_scheme
@@ -65,32 +73,40 @@ class YEngine(YBase):
             matcher = YMatcher(keeped, req, self.ctx)
             results.update(matcher.computeSchemes())
         self.dbg("[FWIN] {}\n{}".format(results, keeped))
-        finalWinner = max(results, key=results.get)
-        finalResponse = keeped[finalWinner]
+        if len(results):
+            finalWinner = max(results, key=results.get)
+            finalResponse = keeped[finalWinner]
+        else:
+            finalResponse = "Je n'ai pas de réponse à vous donner..."
         self.dbg("[FINALLY] {}".format(finalResponse),2)
-        return self.readResponse(finalResponse)
+        # return self.readResponse(finalResponse)
+        return finalResponse
 
     def readResponse(self, response_id):
         r = self.query.getResult(response_id).fetchone()
-        self.routeType(r)
+        if not self.context.server:
+            self.routeType(r)
         return r[self.query.db.t_response.c.callback]
 
     def routeType(self, result):
-        scheme = self.query.db.t_response_type
         scheme_r = self.query.db.t_response
-        if result[scheme.c.type_name] == "text":
-            self.showMessage(result[scheme_r.c.response])
-        elif result[scheme.c.type_name] == "command":
-            self.executeCommand(result[scheme_r.c.response])
+        self.showResponse(result[scheme_r.c.id])
 
     def showMessage(self, message):
         print(str(message).decode('latin1'))
 
-    def executeCommand(self, command):
-        pass
+    def showResponse(self, command):
+        ci = self.query.getCommandInformations(command)
+        d = dict(ci.fetchone())
+        d["response"] = d["response"].decode('latin-1')
+        res = (json.dumps(d))
+        print("{}".format(res))
 
     def applyCallback(self, cb_id):
         response = self.readResponse(cb_id)
         while response:
             response = self.readResponse(response)
         return response
+    
+    def __repr__(self):
+        return "Je suis l'engine !!!"

@@ -45,6 +45,12 @@ class YQuery(YBase):
         self.dbg("[GR] resultats de la requete [{}]: {}".format(request, result),3)
         return result
 
+    def getCommandInformations(self, result_id):
+        request = self.db.getCommandInformations(result_id)
+        result = self.db.connection.execute(request)
+        self.dbg("[CI] resultats de la requete [{}]: {}".format(request, result),3)
+        return result
+
     def __repr__(self):
         return "Requete actuelle: {} ({})".format(
                 self.query, self.db)
