@@ -47,7 +47,9 @@ class YEngine(YBase):
         self.digestPartialQuery()
         self.results = ulist.unique(self.results)
         self.dbg("[UPOST] {}".format(self.results))
-        self.findMatches()
+        cb = self.findMatches()
+        if cb:
+            self.applyCallback(cb)
 
     def findMatches(self):
         scheme = self.query.db.t_response_scheme
@@ -66,5 +68,29 @@ class YEngine(YBase):
         finalWinner = max(results, key=results.get)
         finalResponse = keeped[finalWinner]
         self.dbg("[FINALLY] {}".format(finalResponse),2)
-        r = self.query.getResult(finalResponse).fetchone()
-        print(str(r[self.query.db.t_response.c.response]).decode('latin1'))
+        return self.readResponse(finalResponse)
+
+    def readResponse(self, response_id):
+        r = self.query.getResult(response_id).fetchone()
+        self.routeType(r)
+        return r[self.query.db.t_response.c.callback]
+
+    def routeType(self, result):
+        scheme = self.query.db.t_response_type
+        scheme_r = self.query.db.t_response
+        if result[scheme.c.type_name] == "text":
+            self.showMessage(result[scheme_r.c.response])
+        elif result[scheme.c.type_name] == "command":
+            self.executeCommand(result[scheme_r.c.response])
+
+    def showMessage(self, message):
+        print(str(message).decode('latin1'))
+
+    def executeCommand(self, command):
+        pass
+
+    def applyCallback(self, cb_id):
+        response = self.readResponse(cb_id)
+        while response:
+            response = self.readResponse(response)
+        return response

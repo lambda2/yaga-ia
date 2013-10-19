@@ -18,6 +18,7 @@ class YDatabase(YBase):
         self.t_value = Table('value', self.meta, autoload=True, autoload_with=e)
         self.t_response = Table('response', self.meta, autoload=True, autoload_with=e)
         self.t_response_scheme = Table('response_scheme', self.meta, autoload=True, autoload_with=e)
+        self.t_response_type = Table('response_type', self.meta, autoload=True, autoload_with=e)
 
     def _connect(self):
         self.engine = create_engine('mysql://yaga-user:4GTEfUQtrLZ4qLN4@localhost/yaga', encoding='latin1')
@@ -60,7 +61,8 @@ class YDatabase(YBase):
             wh_pl.append(self.t_platform.c.name == platform)
         r = select("*", use_labels=True).select_from(self.t_response\
             .join(self.t_language)
-            .join(self.t_platform))
+            .join(self.t_platform)
+            .join(self.t_response_type))
         p = wh_pl.pop()
         while len(wh_pl):
             p = or_(p, wh_pl.pop())
