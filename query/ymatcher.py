@@ -34,7 +34,7 @@ class YMatcher(YBase):
         dist_count  = len(scheme)
         matchers = 0
         for elt in self.current:
-            if elt in scheme:
+            if elt in scheme and dist_count <= input_count:
                 matchers = matchers + 1
         self. dbg("[#] [Matchers->{}]\t[i_count->{}]\t[dist_count->{}]".format(
             matchers, input_count, dist_count))
