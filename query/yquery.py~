@@ -10,17 +10,13 @@ class YQuery(YBase):
     def __init__(self, query, ctx):
         """Constructeur de notre classe"""
         YBase.__init__(self, ctx)
-        self.dbg("  <newquery> : {} ({})".format(query, type(query)), 2)
-        self.dbg("  <ctx> : {} ({})".format(self.ctx, type(self.ctx)), 2)
         self.query = self.cleanQuery(query)
         self.db = YDatabase(ctx)
 
     def cleanQuery(self, query):
-        if not (self.ctx.interactive or self.ctx.server) and (len(query) > 1):
+        if(len(query) > 1):
             query = query[1:]
-            return " ".join(query)
-        else:
-            return query
+        return " ".join(query)
 
     def searchEntireExpression(self):
         return self.searchExpression(self.query)
@@ -47,6 +43,7 @@ class YQuery(YBase):
         request = self.db.getResultRequest(result_id)
         result = self.db.connection.execute(request)
         self.dbg("[GR] resultats de la requete [{}]: {}".format(request, result),3)
+
         return result
 
     def getCommandInformations(self, result_id):

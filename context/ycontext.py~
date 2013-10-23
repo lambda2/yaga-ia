@@ -13,19 +13,8 @@ class YContext:
         self.verbose = 4
         self.history = dict()
         self.server = False
-        self.interactive = False
         self.exitRequired = False
-        self.logs = []
-        
-    def reset(self):
-        self.logs = []
 
     def __repr__(self):
-        a = "Platform : {}\nLang : {}\n".format(
+        return "|\tplatform : {}\n| \tlang : {}".format(
             self.platform, self.lang)
-        if self.interactive:
-            a = a + "[x] INTERACTIVE\n"
-        if self.server:
-            a = a + "[x] SERVEUR\n"
-        a = a + "Verbose : {}\n".format(self.verbose)
-        return a

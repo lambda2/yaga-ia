@@ -25,6 +25,9 @@ def manageServer(args, ctx):
     if "-s" in args:
         args.remove("-s")
         ctx.server = True
+    if "-i" in args:
+        args.remove("-i")
+        ctx.interactive = True
     return args, ctx
 
 # test de la fonction table
@@ -37,10 +40,10 @@ if __name__ == "__main__":
     if ctx.server:
         server = YServer(q, 1993)
         server.start()
-    elif "-i" in sys.argv:
+    elif ctx.interactive:
         while not q.isTheEnd():
             question = raw_input("Y> ")
             q.changeQuery(question)
-            q.digest()
+            print q.digest()
     else:
-        q.digest()
+        print q.digest()

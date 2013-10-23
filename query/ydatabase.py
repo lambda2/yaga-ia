@@ -32,11 +32,13 @@ class YDatabase(YBase):
         self.connection.close()
         
     def getExprRequest(self, args):
+        self.dbg("ARGS = : {} ({})".format(args, type(args)), 1)
         wh = []
         if type(args) == str:
             args = [args]
+        self.dbg("Arguments de requete : {}".format(args), 1)
         for arg in args:
-            wh.append(self.t_expression.c.name.ilike("%" + arg + "%"))
+            wh.append(self.t_expression.c.name.ilike(arg))
         o = wh.pop()
         r = select("*", use_labels=True).select_from(self.t_expression\
             .join(self.t_value))

@@ -29,7 +29,7 @@ class YBase:
             if not self.ctx.server:
             	print("{}{}{}".format(col, str_, self._reset_color))
             else :
-            	self.ctx.logs.append("{}{}{}".format(col, str_, self._reset_color))
+            	self.ctx.log.append("{}{}{}".format(col, str_, self._reset_color))
 
     def out(self, str_):
         print(str_)

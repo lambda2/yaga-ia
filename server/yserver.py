@@ -20,19 +20,35 @@ class YTCPHandler(ss.StreamRequestHandler):
     def handle(self):
         # self.rfile is a file-like object created by the handler;
         # we can now use e.g. readline() instead of raw recv() calls
-        print "{} wrote:".format(self.client_address[0])
         # Likewise, self.wfile is a file-like object used to write back
         # to the client
+        self.server.engine.ctx.reset()
         question = self.rfile.readline()
-	print "{}".format(question)
-        self.server.engine.changeQuery(question)
-        response = self.server.engine.serverDigest()
-        #self.wfile.write(response)
-        #self.wfile.write("\n.\r\n\r\n")
-	self.request.sendall("{}\n".format(response))
+        question = question.replace("\n","")
+        if not self.isSysOperations(question):
+            a = ""
+            for e in range(80):
+                a = a + "-"
+            print a
+            print "{} wrote: {}".format(self.client_address[0], question)
+            print "#{}#".format(question.replace("\n","\\n"))
+            self.server.engine.changeQuery(question)
+            response = self.server.engine.digest()
+            if self.server.engine.ctx.verbose == 0:
+            	print "\n".join(self.server.engine.ctx.logs)
+            #self.wfile.write(response)
+            #self.wfile.write("\n.\r\n\r\n")
+            self.request.sendall("{}\n".format(response))
+
+    def isSysOperations(self, question):
+        if question .upper()== "#Y# QUIT":
+            self.finish()
+            self.server.shutdown()
+            return True
+        return False
 
 class YTCPServer(ss.TCPServer):
-    
+
     def setEngine(self, engine):
         self.engine = engine
 
@@ -41,14 +57,14 @@ class YTCPServer(ss.TCPServer):
         self.RequestHandlerClass(request, client_address, self)
 
 class YServer:
-    
+
     def __init__(self, engine, port=1990, host="localhost"):
         # Serveur http de base
         self.engine = engine
         self.port = port
         self.host = host
-        
-        """        
+
+        """
         self.server = YThreadedTCPServer((self.host, self.port), YThreadedTCPRequestHandler)
         ip, port = self.server.server_address
         # Start a thread with the server -- that thread will then start one

@@ -13,10 +13,7 @@ class YEngine(YBase):
     def __init__(self, query, ctx):
         """Constructeur de notre classe"""
         YBase.__init__(self, ctx)
-        self.resetEngine(query)
-
-    def resetEngine(self, query):
-        self.query = YQuery(query, self.ctx)
+        self.query = YQuery(query, ctx)
         self.results = []
         self.__theEnd = False
         
@@ -44,7 +41,7 @@ class YEngine(YBase):
             self.results.append(results)
 
     def changeQuery(self, newQuery):
-        self.resetEngine(newQuery)
+        self.query.query = newQuery
 
     def digest(self):
         self.digestEntireQuery()
@@ -70,6 +67,8 @@ class YEngine(YBase):
         if len(results):
             finalWinner = max(results, key=results.get)
             finalResponse = keeped[finalWinner]
+            print("finalresponse ->")
+            print(type(finalResponse))
         else:
             finalResponse = long(6)
         self.dbg("[FINALLY] {}".format(finalResponse),2)
@@ -79,6 +78,7 @@ class YEngine(YBase):
     def readResponse(self, response_id):
         self.dbg("<readResponse>")
         r = self.query.getResult(response_id).fetchone()
+        print("query -> {}".format(r))
         return self.routeType(r)
 
     def routeType(self, result):
