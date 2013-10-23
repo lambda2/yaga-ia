@@ -35,7 +35,7 @@ if __name__ == "__main__":
     sys.argv, ctx = manageServer(sys.argv, ctx)
     q = YEngine(sys.argv, ctx)
     if ctx.server:
-        server = YServer(q, 1990)
+        server = YServer(q, 1993)
         server.start()
     elif "-i" in sys.argv:
         while not q.isTheEnd():

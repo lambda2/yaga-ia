@@ -3,3 +3,5 @@
 query/__init__.pyc
 query/ydatabase.pyc
 query/yquery.pyc
+yaga.py~
+server/yserver.py~

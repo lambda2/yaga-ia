@@ -20,15 +20,16 @@ class YTCPHandler(ss.StreamRequestHandler):
     def handle(self):
         # self.rfile is a file-like object created by the handler;
         # we can now use e.g. readline() instead of raw recv() calls
-        self.data = self.rfile.readline()
         print "{} wrote:".format(self.client_address[0])
-        print self.data
         # Likewise, self.wfile is a file-like object used to write back
         # to the client
         question = self.rfile.readline()
+	print "{}".format(question)
         self.server.engine.changeQuery(question)
         response = self.server.engine.serverDigest()
-        self.wfile.write(response)
+        #self.wfile.write(response)
+        #self.wfile.write("\n.\r\n\r\n")
+	self.request.sendall("{}\n".format(response))
 
 class YTCPServer(ss.TCPServer):
     
